@@ -1,164 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RAJASALTIN</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        transition: background 0.3s, color 0.3s;
-        background: #121212;
-        color: white;
-        overflow: hidden;
-    }
-    header {
-        text-align: center;
-        padding: 20px;
-        font-size: 2em;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-    .container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .links-box {
-        display: flex;
-        gap: 20px;
-        background: rgba(255,255,255,0.1);
-        padding: 20px 40px;
-        border-radius: 15px;
-        backdrop-filter: blur(5px);
-    }
-    .links-box a img {
-        width: 40px;
-        height: 40px;
-        filter: brightness(0) invert(1);
-        transition: transform 0.2s;
-    }
-    .links-box a img:hover {
-        transform: scale(1.2);
-    }
-    .toggle-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        background: white;
-        color: black;
-        font-weight: bold;
-    }
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: white;
+    overflow: hidden;
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* vertical center */
+    align-items: center;      /* horizontal center */
+    height: 100vh;
+    position: relative;
+  }
+  .light-mode {
+    background: #f4f4f4;
+    color: black;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 0 0 40px 0;
+    user-select: none;
+  }
+  .links-box {
+    display: flex;
+    gap: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+  }
+  .links-box a img {
+    width: 50px;
+    height: 50px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.2s;
+  }
+  body.light-mode .links-box a img {
+    filter: none;
+  }
+  .links-box a:hover img {
+    transform: scale(1.2);
+  }
+  .toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: black;
+    font-weight: bold;
+    user-select: none;
+    z-index: 10;
+  }
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
 </style>
 </head>
 <body>
-<button class="toggle-btn" onclick="toggleTheme()">Light Mode</button>
-<header>RAJASALTIN</header>
+  <button class="toggle-btn" onclick="toggleTheme()">Light Mode</button>
+  <h1>RAJASALTIN</h1>
+  <div class="links-box">
+    <a href="https://discord.com/users/878819643945545748" target="_blank" rel="noopener noreferrer" title="Discord">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" />
+    </a>
+    <a href="https://www.instagram.com/daddyrajasaltin/" target="_blank" rel="noopener noreferrer" title="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+    </a>
+    <a href="https://youtube.com/@kingziback?si=_k5QrxYdKXbOWFZY" target="_blank" rel="noopener noreferrer" title="YouTube">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" style="width:50px; height:50px;" />
+    </a>
+    <a href="https://guns.lol/rajasaltin" target="_blank" rel="noopener noreferrer" title="Guns.lol">
+      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Guns.lol" />
+    </a>
+  </div>
 
-<div class="container">
-    <div class="links-box">
-        <a href="https://discord.com/users/878819643945545748" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord"></a>
-        <a href="https://www.instagram.com/daddyrajasaltin/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram"></a>
-        <a href="https://youtube.com/@kingziback?si=_k5QrxYdKXbOWFZY" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-        <a href="https://guns.lol/rajasaltin" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Gun_Icon.svg" alt="Guns.lol"></a>
-    </div>
-</div>
-
-<canvas id="bgCanvas"></canvas>
+  <canvas id="bgCanvas"></canvas>
 
 <script>
-    // Dark/Light Mode Toggle
-    let dark = true;
-    function toggleTheme() {
-        dark = !dark;
-        document.body.style.background = dark ? "#121212" : "#f4f4f4";
-        document.body.style.color = dark ? "white" : "black";
-        document.querySelectorAll('.links-box a img').forEach(img => {
-            img.style.filter = dark ? "brightness(0) invert(1)" : "none";
-        });
-        document.querySelector(".toggle-btn").textContent = dark ? "Light Mode" : "Dark Mode";
+  let dark = true;
+  function toggleTheme() {
+    dark = !dark;
+    if (dark) {
+      document.body.classList.remove('light-mode');
+      document.querySelector('.toggle-btn').textContent = 'Light Mode';
+    } else {
+      document.body.classList.add('light-mode');
+      document.querySelector('.toggle-btn').textContent = 'Dark Mode';
     }
+  }
 
-    // Canvas background with dots and lines
-    const canvas = document.getElementById("bgCanvas");
-    const ctx = canvas.getContext("2d");
-    let w, h;
-    let dots = [];
-    let mouse = {x: null, y: null};
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  let dots = [];
+  let mouse = { x: null, y: null };
 
-    function resizeCanvas() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-    for (let i = 0; i < 80; i++) {
-        dots.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            r: Math.random() * 3,
-            dx: (Math.random() - 0.5) * 1,
-            dy: (Math.random() - 0.5) * 1
-        });
-    }
-
-    window.addEventListener("mousemove", e => {
-        mouse.x = e.x;
-        mouse.y = e.y;
+  for (let i = 0; i < 80; i++) {
+    dots.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 3,
+      dx: (Math.random() - 0.5) * 1,
+      dy: (Math.random() - 0.5) * 1,
     });
+  }
 
-    function draw() {
-        ctx.clearRect(0, 0, w, h);
-        for (let i = 0; i < dots.length; i++) {
-            let d = dots[i];
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-            ctx.fillStyle = "white";
-            ctx.fill();
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+  });
 
-            d.x += d.dx;
-            d.y += d.dy;
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < dots.length; i++) {
+      let d = dots[i];
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'black' : 'white';
+      ctx.fill();
 
-            if (d.x < 0 || d.x > w) d.dx *= -1;
-            if (d.y < 0 || d.y > h) d.dy *= -1;
+      d.x += d.dx;
+      d.y += d.dy;
 
-            // Draw lines to nearby dots
-            for (let j = i + 1; j < dots.length; j++) {
-                let d2 = dots[j];
-                let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
-                if (dist < 100) {
-                    ctx.strokeStyle = "rgba(255,255,255,0.1)";
-                    ctx.beginPath();
-                    ctx.moveTo(d.x, d.y);
-                    ctx.lineTo(d2.x, d2.y);
-                    ctx.stroke();
-                }
-            }
+      if (d.x < 0 || d.x > w) d.dx *= -1;
+      if (d.y < 0 || d.y > h) d.dy *= -1;
 
-            // Draw line to mouse
-            if (mouse.x && Math.hypot(d.x - mouse.x, d.y - mouse.y) < 120) {
-                ctx.strokeStyle = "rgba(255,255,255,0.3)";
-                ctx.beginPath();
-                ctx.moveTo(d.x, d.y);
-                ctx.lineTo(mouse.x, mouse.y);
-                ctx.stroke();
-            }
+      for (let j = i + 1; j < dots.length; j++) {
+        let d2 = dots[j];
+        let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
+        if (dist < 100) {
+          ctx.strokeStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d2.x, d2.y);
+          ctx.stroke();
         }
-        requestAnimationFrame(draw);
+      }
+
+      if (mouse.x && Math.hypot(d.x - mouse.x, d.y - mouse.y) < 120) {
+        ctx.strokeStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)';
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
     }
-    draw();
+    requestAnimationFrame(draw);
+  }
+  draw();
 </script>
 </body>
 </html>
