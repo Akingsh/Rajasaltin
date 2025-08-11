@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RAJASALTIN</title>
 <style>
-  body {
+  html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  body {
     font-family: Arial, sans-serif;
     background: #121212;
     color: white;
@@ -14,10 +18,11 @@
     transition: background 0.3s, color 0.3s;
     display: flex;
     flex-direction: column;
-    justify-content: center;  /* vertical center */
-    align-items: center;      /* horizontal center */
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     position: relative;
+    z-index: 1;
   }
   .light-mode {
     background: #f4f4f4;
@@ -29,6 +34,7 @@
     letter-spacing: 4px;
     margin: 0 0 40px 0;
     user-select: none;
+    z-index: 2;
   }
   .links-box {
     display: flex;
@@ -37,43 +43,58 @@
     padding: 20px 40px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
+    z-index: 2;
   }
   .links-box a img {
     width: 50px;
     height: 50px;
-    filter: brightness(0) invert(1);
+    filter: none !important; /* Keep original colors always */
     transition: transform 0.2s;
-  }
-  body.light-mode .links-box a img {
-    filter: none;
   }
   .links-box a:hover img {
     transform: scale(1.2);
   }
-  .toggle-btn {
+  .toggle-btn, .secret-btn {
     position: fixed;
-    top: 20px;
     right: 20px;
-    padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background: white;
-    color: black;
     font-weight: bold;
     user-select: none;
     z-index: 10;
+    background: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .toggle-btn {
+    top: 20px;
+    padding: 10px 20px;
+  }
+  .secret-btn {
+    top: 60px;
+    padding: 6px 12px;
+    font-size: 12px;
+    width: 70px;
+    text-align: center;
+    border-radius: 12px;
+  }
+  .toggle-btn:hover, .secret-btn:hover {
+    background: #ddd;
   }
   canvas {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 0;
+    pointer-events: none;
   }
 </style>
 </head>
 <body>
   <button class="toggle-btn" onclick="toggleTheme()">Light Mode</button>
+  <button class="secret-btn" onclick="window.open('https://youtu.be/xvFZjo5PgG0?si=AC648lzslK9ywlH7', '_blank')"
+    title="Secret Button">Secret</button>
   <h1>RAJASALTIN</h1>
   <div class="links-box">
     <a href="https://discord.com/users/878819643945545748" target="_blank" rel="noopener noreferrer" title="Discord">
@@ -85,8 +106,8 @@
     <a href="https://youtube.com/@kingziback?si=_k5QrxYdKXbOWFZY" target="_blank" rel="noopener noreferrer" title="YouTube">
       <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" style="width:50px; height:50px;" />
     </a>
-    <a href="https://guns.lol/rajasaltin" target="_blank" rel="noopener noreferrer" title="Guns.lol">
-      <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Guns.lol" />
+    <a href="#" title="Sxltin_">
+      <img src="https://render.crafty.gg/3d/head/5430295f-9a7a-42ab-8886-769cfdb56332" alt="Minecraft Skin" style="width:50px; height:50px;" />
     </a>
   </div>
 
@@ -135,11 +156,16 @@
 
   function draw() {
     ctx.clearRect(0, 0, w, h);
+    const isLight = document.body.classList.contains('light-mode');
+    const dotColor = isLight ? 'black' : 'white';
+    const lineColor = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+    const mouseLineColor = isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)';
+
     for (let i = 0; i < dots.length; i++) {
       let d = dots[i];
       ctx.beginPath();
       ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-      ctx.fillStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'black' : 'white';
+      ctx.fillStyle = dotColor;
       ctx.fill();
 
       d.x += d.dx;
@@ -152,7 +178,7 @@
         let d2 = dots[j];
         let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
         if (dist < 100) {
-          ctx.strokeStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+          ctx.strokeStyle = lineColor;
           ctx.beginPath();
           ctx.moveTo(d.x, d.y);
           ctx.lineTo(d2.x, d2.y);
@@ -161,7 +187,7 @@
       }
 
       if (mouse.x && Math.hypot(d.x - mouse.x, d.y - mouse.y) < 120) {
-        ctx.strokeStyle = getComputedStyle(document.body).color === 'rgb(255, 255, 255)' ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)';
+        ctx.strokeStyle = mouseLineColor;
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
         ctx.lineTo(mouse.x, mouse.y);
