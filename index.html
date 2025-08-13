@@ -30,27 +30,46 @@
     font-size: 4rem;
     font-weight: 900;
     letter-spacing: 4px;
-    margin: 0 0 40px 0;
+    margin: 0 0 10px 0; /* moved up */
     user-select: none;
     z-index: 2;
   }
-  .links-box {
+  .tagline {
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-bottom: 30px;
+    text-align: center;
+    z-index: 2;
+  }
+  .links-container {
     display: flex;
-    gap: 25px;
+    flex-direction: column;
+    gap: 15px;
     background: rgba(255, 255, 255, 0.1);
     padding: 20px 40px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
     z-index: 2;
   }
+  .links-box {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+  }
   .links-box a img {
     width: 50px;
     height: 50px;
-    filter: none !important; /* keep original colors */
+    filter: none !important;
     transition: transform 0.2s;
   }
   .links-box a:hover img {
     transform: scale(1.2);
+  }
+  .fang-logo {
+    width: 65px; /* slightly bigger */
+    height: auto;
+    border-radius: 8px;
   }
   .toggle-btn, .secret-btn {
     position: fixed;
@@ -93,19 +112,30 @@
   <button class="secret-btn" onclick="window.open('https://youtu.be/xvFZjo5PgG0?si=AC648lzslK9ywlH7', '_blank')" title="Secret Button">Secret</button>
 
   <h1>RAJASALTIN</h1>
-  <div class="links-box">
-    <a href="https://discord.com/users/878819643945545748" target="_blank" rel="noopener noreferrer" title="Discord">
-      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" />
-    </a>
-    <a href="https://www.instagram.com/daddyrajasaltin/" target="_blank" rel="noopener noreferrer" title="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
-    </a>
-    <a href="https://youtube.com/@kingziback?si=_k5QrxYdKXbOWFZY" target="_blank" rel="noopener noreferrer" title="YouTube">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-    </a>
-    <a href="#" title="Sxltin_">
-      <img src="https://render.crafty.gg/2d/head/5430295f-9a7a-42ab-8886-769cfdb56332" alt="Minecraft Skin" />
-    </a>
+  <div class="tagline">I run a Minecraft PvP clan! Join up gang.</div>
+
+  <div class="links-container">
+    <!-- Row 1 -->
+    <div class="links-box">
+      <a href="https://discord.com/users/878819643945545748" target="_blank" rel="noopener noreferrer" title="Discord">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" />
+      </a>
+      <a href="https://www.instagram.com/daddyrajasaltin/" target="_blank" rel="noopener noreferrer" title="Instagram">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+      </a>
+      <a href="https://youtube.com/@kingziback?si=_k5QrxYdKXbOWFZY" target="_blank" rel="noopener noreferrer" title="YouTube">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+      </a>
+      <a href="#" title="Sxltin_">
+        <img src="https://render.crafty.gg/2d/head/5430295f-9a7a-42ab-8886-769cfdb56332" alt="Minecraft Skin" />
+      </a>
+    </div>
+    <!-- Row 2 -->
+    <div class="links-box">
+      <a href="https://discord.gg/fang" target="_blank" rel="noopener noreferrer" title="FANG Clan Discord">
+        <img src="LVDF9GD.jpg" alt="FANG Clan" class="fang-logo" />
+      </a>
+    </div>
   </div>
 
   <canvas id="bgCanvas"></canvas>
